@@ -3,8 +3,11 @@
 
 #include <QtWidgets>
 #include <QtNetwork>
+#include <QString>
+#include <QTime>
 #include "ui_CuaSoNguoiDung.h"
-
+#include <QMessageBox>
+#include <QMap>
 class CuaSoNguoiDung : public QWidget, private Ui::CuaSoNguoiDung {
     Q_OBJECT
 
@@ -23,6 +26,17 @@ class CuaSoNguoiDung : public QWidget, private Ui::CuaSoNguoiDung {
     private:
         QTcpSocket *socket; // May chu
         quint16 kichThuoc;
+};
+class thongtin {
+
+    public:
+        thongtin(QString , QString);
+        QString getTen() const;
+        QString getQuyen() const;
+
+    private:
+        QString ten;
+        QString quyen;
 };
 
 #endif

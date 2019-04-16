@@ -27,6 +27,7 @@ CuaSoMayChu::CuaSoMayChu () {
     kichThuoc = 0;
 }
 
+
 void CuaSoMayChu::ketNoiMoi() {
     guiTinNhanChoMoiNguoi (tr("<em>Một người mới  vừa tham gia với chúng ta !</em>"));
 
@@ -48,15 +49,51 @@ QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
              return;
         }
         in >> kichThuoc; // Neu nhan duoc kich thuoc tin nhan thi lay ra gia tri do
+
     }
     // Biet kich thuoc, chung ta se kiem tra xem da nhan duoc toan bo tin nhan chua
     if (socket->bytesAvailable() < kichThuoc) { // Neu chua nhan du tin nhan thi thoat xu ly
         return;
     }
     QString tinNhan;
-    in >> tinNhan;
+    QString name;
+    QString checkMes;
+    QString checkCom;
 
-    guiTinNhanChoMoiNguoi(tinNhan);
+    in >> tinNhan;
+   name = tinNhan;
+    checkMes = tinNhan;
+
+
+    name = name.remove(0,9);
+    name = name.remove(name.indexOf(" "),(name.size()-name.indexOf(" ")));
+
+
+    if (name == "Owner")
+    {infoNguoiDung.insert(name,"Admin");}
+    else
+        {infoNguoiDung.insert(name,"User");}
+
+        if  (tinNhan.indexOf("/")!= -1)
+        {checkMes=checkMes.remove(0,tinNhan.indexOf("/")+1);
+
+            checkCom = checkMes;
+         checkMes = checkMes.remove(checkMes.indexOf(" "),(checkMes.size()-checkMes.indexOf(" ")));}
+
+//          if ((checkMes == "report")&&(infoNguoiDung.value(name) == "Admin")||(infoNguoiDung.value(name) == "Mod"))
+
+
+
+//                   NguoiDungMoi->write( infoNguoiDung.keys()) << endl;
+//
+
+
+
+//        }
+
+             else
+    {guiTinNhanChoMoiNguoi(tinNhan);}
+
 
     // Dat lai kich thuoc la 0 de cho tin nhan tiep theo
     kichThuoc = 0;

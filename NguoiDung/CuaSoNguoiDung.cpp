@@ -1,5 +1,6 @@
 #include "CuaSoNguoiDung.h"
 
+
 CuaSoNguoiDung::CuaSoNguoiDung() {
     setupUi(this);
 
@@ -21,18 +22,87 @@ void CuaSoNguoiDung::anNutKetNoi() {
     // Thong bao la ket noi dang duoc thuc hien
     cuocHoiThoai->append(tr("<em>Đang kết nối...</em>"));
     nutKetNoi->setEnabled(false);
-
+    QMessageBox::StandardButton reply = QMessageBox::question(this, "Hãy lựa chọn", "Bạn đang muốn làm gì?" , QMessageBox::Yes | QMessageBox::No | QMessageBox::Ignore);
+    //QAbstractButton *myYesButton = msgBox.addButton(trUtf8("Sim"), QMessageBox::YesRole);
+    //Private:
+    //const BUT_YES As String = "Đồng ý";
+    if(reply == QMessageBox::Ignore) {
+            QApplication::quit();}
+                    else
+                    if(reply == QMessageBox::No){
     socket->abort();
-    socket->connectToHost(ipMayChu->text(), congMayChu->value()); // Ket noi toi may chu
+    socket->connectToHost(ipMayChu->text(), congMayChu->value());
+
+                    }
+                    else {
+                        bool ok = false;
+                            QString Passwork = QInputDialog::getText(this, "Passwork"," Hãy nhập Passwork ?", QLineEdit::Normal, QString(), &ok);
+                            if (ok && Passwork=="123456"){
+                                QMessageBox::information(this,"Passwork", "Xin chào Owner !");
+                                socket->abort();
+                                socket->connectToHost(ipMayChu->text(), congMayChu->value());
+
+                            }else{
+                                QMessageBox::critical(this, "Passwork", "Sai mật khẩu, xin thử lại.");
+                              QApplication::quit();
+
+                            }
+                    }
 }
 
 // Gui tin den may chu
 void CuaSoNguoiDung::anNutGuiTin() {
     QByteArray goiTin;
     QDataStream out(&goiTin, QIODevice::WriteOnly);
+    QTime ct = QTime::currentTime();
+    QString mesContent = khungSoanThao ->text();;
+    QString name = nickname->text();
+//    QString temp ;
+//    if (mesContent.indexOf("/") == 0){
 
+//        qDebug()<<"mesContent"<<mesContent;
+
+//        QString command = mesContent;
+
+//         command = command.remove(mesContent.indexOf(" "), mesContent.size() - mesContent.indexOf(" "));
+
+
+
+//        temp  = mesContent.remove(0 ,command.size() + 1);
+
+
+
+//       switch (temp) {
+//       case "/leave":
+//            if (name=="Owner")
+//            {
+//                QMessageBox::StandardButton rep = QMessageBox::question(this, "Hãy lựa chọn", "Bạn muốn thoát khỏi phòng" , QMessageBox::Yes | QMessageBox::No );}
+//            if ( rep == QMessageBox::Yes)
+//            { ngatKetNoi();}
+
+//            else {
+//            ngatKetNoi();
+//            }
+//            break;
+//        case "/nickname":
+//            cuocHoiThoai->append("Nickname của bạn là :" + nickname->text() );
+//            break;
+//        //case 'setnickname':
+
+
+//        default:
+//            cuocHoiThoai->append("Lệnh không rõ, vui lòng nhập lại");
+
+
+
+//            break;
+//        }
+
+//    }
+//    else
     // Chuan bi goi tin de gui di
-    QString tinGuiDi = tr("<strong>") + nickname->text() +tr("</strong> : ") + khungSoanThao ->text();
+    {
+        QString tinGuiDi = ct.toString()+" "+ nickname->text() + " : " + khungSoanThao ->text();
 
     out << (quint16) 0;
     out << tinGuiDi;
@@ -43,6 +113,7 @@ void CuaSoNguoiDung::anNutGuiTin() {
 
     khungSoanThao ->clear(); // Xoa tin vua gui khoi khung soan thao
     khungSoanThao ->setFocus();
+    }
 }
 
 void CuaSoNguoiDung::anEnterGuiTin() {

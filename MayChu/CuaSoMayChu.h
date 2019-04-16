@@ -3,6 +3,7 @@
 
 #include <QtWidgets>
 #include <QtNetwork>
+#include <QMap>
 
 class CuaSoMayChu : public QWidget {
     Q_OBJECT
@@ -23,6 +24,9 @@ class CuaSoMayChu : public QWidget {
         QTcpServer *mayChu;
         QList<QTcpSocket *> nguoiDung;
         quint16 kichThuoc;
+        QMap <QString,QString> infoNguoiDung;
 };
+
+
 
 #endif
