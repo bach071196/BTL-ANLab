@@ -62,7 +62,7 @@
         <number>65535</number>
        </property>
        <property name="value">
-        <number>50885</number>
+        <number>1080</number>
        </property>
       </widget>
      </item>
@@ -122,9 +122,6 @@
       <bool>true</bool>
      </property>
     </widget>
-   </item>
-   <item>
-    <widget class="QComboBox" name="comboBox"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
